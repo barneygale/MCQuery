@@ -106,7 +106,6 @@ class MCQuery:
         
         #Parse 'plugins'
         s = data['plugins']
-        s = 'CraftBukkit 1338: WorldEdit 1.2; LogBlock 4.5; Dynmap 8.2beta'
         s = s.split(': ', 1)
         data['server_mod'] = s[0]
         if len(s) == 1:
