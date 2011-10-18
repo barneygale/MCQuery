@@ -72,7 +72,7 @@ class MCQuery:
         return data
     
     def full_stat(self):
-    	#Pad request to 8 bytes
+        #Pad request to 8 bytes
         self.write_packet(0, self.challenge + '\x00\x00\x00\x00')
         try:
             type, id, buff = self.read_packet()
@@ -103,5 +103,15 @@ class MCQuery:
         #Encode ints
         for k in ('numplayers', 'maxplayers', 'hostport'):
             data[k] = int(data[k])
+        
+        #Parse 'plugins'
+        s = data['plugins']
+        s = 'CraftBukkit 1338: WorldEdit 1.2; LogBlock 4.5; Dynmap 8.2beta'
+        s = s.split(': ', 1)
+        data['server_mod'] = s[0]
+        if len(s) == 1:
+            data['plugins'] = []
+        elif len(s) == 2:
+            data['plugins'] = s[1].split('; ')
 
         return data
